@@ -1,0 +1,66 @@
+.man_main_flex_event {
+  display: flex;
+  width: 20%;
+  height: auto;
+}
+.sidebar {
+  padding-top: 20px;
+  color: white;
+  width: 20%;
+  flex: 1 1 20%;
+  background: #263544;
+}
+
+.sidebar .nav-link {
+  color: #b7c0cd;
+  padding: 20px 20px;
+  font-weight: 400;
+  line-height: 21px;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #007bff;
+  color: white;
+}
+.sidebar.nav-item {
+  border-bottom: 1px solid rgba(128, 128, 128, 0.833);
+}
+.dropdown_color , .students{
+  transition: all ease-in-out;
+}
+.students {
+  color: #b7c0cd;
+}
+.students,
+i :hover {
+  color: white !important;
+}
+.dropdown_color{
+  background-color: #1d2531b0;
+}
+.active-link {
+  background-color: #136ac7 !important; /* Change this to the desired active link color */
+  color: white;
+}
+.nav-link:focus, .nav-link:hover ,.nav-link:active{
+background-color:#1d2531 !important;
+color: white !important;
+}
+
+
+/* mobile view  */
+
+@media only screen and (min-width: 767px) and (max-width: 889px) {
+  .sidebar .nav-link {
+    font-size: 14px !important;
+  }
+}
+
+@media only screen and (min-width: 0px) and (max-width: 767px) {
+  .sidebar {
+    width: 100%;
+  }
+  .sidebar .nav-link {
+    font-size: 17px;
+  }
+}
