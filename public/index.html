@@ -23,6 +23,14 @@
 <!-- font  -->
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <!-- end  -->
+<script
+type="module"
+src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+></script>
+<script
+nomodule
+src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+></script>
   <title>IBEX</title>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -31,6 +39,225 @@
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
+  <!-- <script>
+    $(document).ready(function() {
+    
+        class TagLinkEditor {
+            constructor() {
+                this.contextMenu = document.createElement("div");
+                this.noteAreaEditable = document.getElementById("note_area");
+                this.menuItems = ["Admission", "ProcessingUser", "GTE", "FileLodgementTeam", "Agent"];
+                this.range = null;
+                this.initializeContextMenu();
+                this.addEventListeners();
+                this.addLink();
+            }
+        
+            getCaretCoordinates() {
+                let x = 0;
+                let y = 0;
+                const isSupported = typeof window.getSelection !== "undefined";
+                if (isSupported) {
+                    const selection = window.getSelection();
+                    if (selection.rangeCount !== 0) {
+                        const range = selection.getRangeAt(0).cloneRange();
+                        range.collapse(true);
+                        const rect = range.getClientRects()[0];
+                        if (rect) {
+                            x = rect.left;
+                            y = rect.top;
+                        }
+                    }
+                }
+                return { x, y };
+            }
+        
+            initializeContextMenu() {
+                this.contextMenu.classList.add("context-menu-tag");
+                this.contextMenu.style.position = "fixed";
+                this.contextMenu.style.display = "none";
+                this.contextMenu.style.backgroundColor = "white";
+                this.contextMenu.style.border = "1px solid black";
+                this.contextMenu.style.padding = "5px";
+                this.contextMenu.style.zIndex = "9999";
+        
+                for (let i = 0; i < this.menuItems.length; i++) {
+                    const menuItem = document.createElement("div");
+                    menuItem.innerText = this.menuItems[i];
+                    menuItem.style.cursor = "pointer";
+                    menuItem.addEventListener("click", () => {
+                        const content = this.noteAreaEditable.innerHTML;
+                        const linkText = menuItem.innerText;
+                        const linkId = linkText.toLowerCase();
+                        if (content.includes(`id="tag-${linkId}"`)) {
+                            return false;
+                        }
+                        const link = document.createElement("span");
+                        link.id = `tag-${linkId}`;
+                        link.innerText = `@${linkText}`;
+                        link.classList.add("e-tag");
+                        link.setAttribute("contenteditable", false);
+                        link.setAttribute("tabindex", "-1");
+                        //const range = document.getSelection().getRangeAt(0);
+                        const content1 = this.range.toString();
+                        this.range.insertNode(link);
+                        this.range.setStartAfter(link);
+                        this.range.setEnd(link.nextSibling, 1);
+                        this.range.deleteContents();
+                        this.range.setStartAfter(link);
+                        this.range.collapse(false);
+                        const selection = window.getSelection();
+                        selection.removeAllRanges();
+                        selection.addRange(this.range);
+                        this.contextMenu.style.display = "none";
+                        if (link.previousElementSibling && link.previousElementSibling.tagName === "BR") {
+                            link.previousElementSibling.remove();
+                        }
+                    });
+                    this.contextMenu.appendChild(menuItem);
+                }
+                document.body.appendChild(this.contextMenu);
+            }
+        
+            addLink() {
+                this.noteAreaEditable.addEventListener("keydown", (event) => {
+                    var textareaValue = this.noteAreaEditable.innerText;
+                    if (event.key === '@') {
+                        const selection = window.getSelection();
+                        this.range = selection.getRangeAt(0);
+                        const rect = this.range.getBoundingClientRect();
+                        const coordinates = this.getCaretCoordinates();
+                        let x = coordinates.x;
+                        let y = coordinates.y;
+                        if (x == 0 && y == 0) {
+                            const parentRect = this.noteAreaEditable.getBoundingClientRect();
+                            x = parentRect.left;
+                            y = parentRect.top;
+                        }
+                        this.contextMenu.style.left = x + "px";
+                        this.contextMenu.style.top = y + "px";
+                        this.contextMenu.style.display = "block";
+                    } else {
+                        this.contextMenu.style.display = "none";
+                    }
+                });
+            }
+        
+            addEventListeners() {
+                this.noteAreaEditable.addEventListener("keydown", (event) => {
+                    if (event.key === '@') {
+                        const selection = window.getSelection();
+                        const range = selection.getRangeAt(0);
+                        const rect = range.getBoundingClientRect();
+                        const coordinates = this.getCaretCoordinates();
+                        let x = coordinates.x;
+                        let y = coordinates.y;
+                        if (x == 0 && y == 0) {
+                            const parentRect = this.noteAreaEditable.getBoundingClientRect();
+                            x = parentRect.left;
+                            y = parentRect.top;
+                        }
+                        this.contextMenu.style.left = x + "px";
+                        this.contextMenu.style.top = y + "px";
+                        this.contextMenu.style.display = "block";
+                    } else {
+                        this.contextMenu.style.display = "none";
+                    }
+                });
+        
+                document.addEventListener("click", (event) => {
+                    if (!this.noteAreaEditable.contains(event.target)) {
+                        this.contextMenu.style.display = "none";
+                    }
+                });
+        
+                document.addEventListener("keydown", (event) => {
+                    if (event.key === "Escape") {
+                        this.contextMenu.style.display = "none";
+                    }
+                });                                                                
+            }
+        }
+        
+        new TagLinkEditor();
+    
+        current_notes = "";
+        
+        $('#notes_submit').click(function() {
+            if(!student_id){
+                console.log("student Id doesnot exist");
+                return false;
+            }
+            note_area = document.getElementById('note_area');
+            let noteAdded = note_area.innerHTML.trim();
+            if (noteAdded != "" && noteAdded != '<br>') {
+    
+                //notes_list = document.getElementById('notes_list');
+                
+                if (noteAdded.lastIndexOf('<br>') === noteAdded.length - 4) {
+                    noteAdded = noteAdded.substring(0, noteAdded.lastIndexOf('<br>') - 1);
+                }
+                $('#loadingIcn').show();
+    
+                let req = new XMLHttpRequest();
+    
+                let formData = new FormData();
+                
+    
+                //note_area = document.getElementById('note_area').innerHTML;
+    
+                let photo = document.getElementById("note_doc").files[0]; // file from input
+                
+                if(photo){
+                    prog_func(req, 'note_doc');
+                }
+                
+                formData.append("photo", photo);
+    
+                formData.append("note_area", noteAdded);
+    
+                formData.append("student_id", student_id);
+    
+                formData.append('posted_by', 'admin');
+    
+                req.open("POST", 'Students/add_notes.php');
+    
+                req.send(formData);
+    
+                req.onreadystatechange = () => {
+    
+                    if (req.readyState === 4) {
+                        $('#loadingIcn').hide();
+                        var aRes = JSON.parse(req.response);
+    
+                        if (aRes.success == false) {
+                            alert(aRes.msg);
+                            //$('#note_area').val('');
+                            note_area.innerHTML = "";
+                            $('#note_doc').val('');
+                            return false;
+                        }                              
+                        
+                        $("#notes_list").prepend(aRes.html);
+    
+                        //$('#note_area').val('');
+                        note_area.innerHTML = "";
+                        $('#note_doc').val('');
+                        //current_notes += req.response;
+                        //notes_list.innerHTML = current_notes;
+                        //$("#notes_list").prepend(req.response);
+                    }
+    
+                }
+                //notes_list.innerHTML = current_notes;
+            } else {
+                console.log('emptyp');
+            }
+    
+        });
+                                                     
+    });
+    </script> -->
   <div id="root"></div>
 </body>
 

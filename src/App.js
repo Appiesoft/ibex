@@ -10,6 +10,7 @@ import UserRoles from "./components/layout/SidarBarComponents/userRoles/UserRole
 import University from "./components/layout/SidarBarComponents/university/University";
 import PrimaryAgents from "./components/layout/SidarBarComponents/primaryAgents/PrimaryAgents";
 import SubAgents from "./components/layout/SidarBarComponents/subAgents/SubAgents";
+import AddNewStudent from "./components/home/addNewStudent/AddNewStudent";
 const App = () => {
   return (
     <div>
@@ -22,8 +23,8 @@ const App = () => {
           <Route exact path="/user-roles" element={<UserRoles />} />
           <Route exact path="/university" element={<University />} />
           <Route exact path="/primary-agents" element={<PrimaryAgents />} />
-
           <Route exact path="/sub-agents" element={<SubAgents />} />
+          <Route exact path="/add-new-student" element={<AddNewStudent />} />
         </Routes>
       </BrowserRouter>
     </div>
