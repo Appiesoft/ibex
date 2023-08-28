@@ -5,8 +5,10 @@ import "./UsersTable.css";
 import { NavLink } from "react-router-dom";
 import { Dropdown, OverlayTrigger, Row, Table, Tooltip } from "react-bootstrap";
 import UserEdit from "./modal/userEdit/UserEdit";
+
 const UsersTable = () => {
   const [modalShow, setModalShow] = useState(false);
+ 
   return (
     <>
       <div>
@@ -157,11 +159,13 @@ const UsersTable = () => {
                     </Dropdown></td>
                   </tr>
                 </tbody>
-                
-      <UserEdit
+       <div>
+       <UserEdit
         show={modalShow}
         onHide={() => setModalShow(false)}
       />
+       </div>         
+     
               </Table>
               </section>
           </div>

@@ -8,10 +8,10 @@ const Footer = () => {
     <footer>
     <Row className='my-4 mx-auto'>
         <Col className='text-center'>
-        <h5>Copyright by &copy; The Ibex CRM {currentYear}</h5>
+        <h6>Copyright by &copy; The Ibex CRM {currentYear}</h6>
         </Col>
     </Row>
-   
+  
     </footer>
   );
 };
